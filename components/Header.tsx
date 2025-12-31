@@ -1,113 +1,62 @@
-"use client"
+import { Home, ShoppingCart, User, Package, Settings, Phone } from "lucide-react";
 
-import { useEffect, useState } from "react"
-import Link from "next/link"
-
-export default function Header() {
-  const [menuOpen, setMenuOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
-  const [lastScrollY, setLastScrollY] = useState(0)
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY
-
-      if (currentScrollY > lastScrollY && currentScrollY > 80) {
-        setScrolled(true)
-      } else {
-        setScrolled(false)
-      }
-
-      setLastScrollY(currentScrollY)
-    }
-
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [lastScrollY])
-
+export default function Navbar() {
   return (
-    <header
-      className={`sticky top-0 z-50 w-full backdrop-blur-md bg-gray-50/80 transition-all duration-300 ${
-        scrolled ? "py-2 shadow-lg" : "py-4 shadow-sm"
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 flex items-center justify-between">
+    <nav className="bg-white shadow-md sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between h-16 items-center">
+          
+          {/* Logo */}
+          <div className="flex-shrink-0">
+            <a href="/" className="text-2xl font-bold text-blue-600">DeeSmartTech</a>
+          </div>
 
-        {/* Logo */}
-        <Link href="/" className="text-xl font-bold text-blue-600">
-          Dee Smart Tech Solutions
-        </Link>
+          {/* Desktop Menu */}
+          <div className="hidden md:flex space-x-6 items-center">
+            <a href="/" className="flex items-center gap-1 text-gray-700 hover:text-blue-600">
+              <Home size={18} /> Home
+            </a>
+            <a href="/shop" className="flex items-center gap-1 text-gray-700 hover:text-blue-600">
+              <ShoppingCart size={18} /> Shop
+            </a>
+            <a href="/services" className="flex items-center gap-1 text-gray-700 hover:text-blue-600">
+              <Package size={18} /> Services
+            </a>
+            <a href="/orders" className="flex items-center gap-1 text-gray-700 hover:text-blue-600">
+              <Package size={18} /> Orders
+            </a>
+            <a href="/profile" className="flex items-center gap-1 text-gray-700 hover:text-blue-600">
+              <User size={18} /> Profile
+            </a>
+            <a href="/contact" className="flex items-center gap-1 text-gray-700 hover:text-blue-600">
+              <Phone size={18} /> Contact
+            </a>
+            <a href="/settings" className="flex items-center gap-1 text-gray-700 hover:text-blue-600">
+              <Settings size={18} /> Settings
+            </a>
+          </div>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex gap-6 text-gray-700 font-medium">
-          <Link href="/products" className="hover:text-blue-600 transition">
-            Products
-          </Link>
-          <Link href="/services" className="hover:text-blue-600 transition">
-            Services
-          </Link>
-          <Link href="/cart" className="hover:text-blue-600 transition">
-            Cart
-          </Link>
-        </nav>
-
-        {/* Desktop Action */}
-        <div className="hidden md:flex">
-          <Link
-            href="/login"
-            className="px-4 py-2 border border-gray-300 rounded text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition"
-          >
-            Login
-          </Link>
+          {/* Mobile Menu Button */}
+          <div className="md:hidden">
+            <button id="mobile-menu-button" className="text-gray-700 hover:text-blue-600">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16"/>
+              </svg>
+            </button>
+          </div>
         </div>
-
-        {/* Mobile Hamburger / Close */}
-        <button
-          onClick={() => setMenuOpen(!menuOpen)}
-          className="relative w-8 h-8 md:hidden focus:outline-none"
-          aria-label="Toggle menu"
-        >
-          <span
-            className={`absolute h-0.5 w-8 bg-gray-700 transition-transform duration-300 ${
-              menuOpen ? "rotate-45 top-4" : "top-2"
-            }`}
-          />
-          <span
-            className={`absolute h-0.5 w-8 bg-gray-700 transition-opacity duration-300 top-4 ${
-              menuOpen ? "opacity-0" : "opacity-100"
-            }`}
-          />
-          <span
-            className={`absolute h-0.5 w-8 bg-gray-700 transition-transform duration-300 ${
-              menuOpen ? "-rotate-45 top-4" : "top-6"
-            }`}
-          />
-        </button>
       </div>
 
-      {/* Mobile Menu */}
-      {menuOpen && (
-        <div className="md:hidden bg-gray-50/90 backdrop-blur-md border-t border-gray-200">
-          <nav className="flex flex-col px-4 py-4 gap-4 text-gray-700 font-medium">
-            <Link href="/products" onClick={() => setMenuOpen(false)}>
-              Products
-            </Link>
-            <Link href="/services" onClick={() => setMenuOpen(false)}>
-              Services
-            </Link>
-            <Link href="/cart" onClick={() => setMenuOpen(false)}>
-              Cart
-            </Link>
-            <Link
-              href="/login"
-              className="mt-2 px-4 py-2 border border-gray-300 rounded text-center"
-              onClick={() => setMenuOpen(false)}
-            >
-              Login
-            </Link>
-          </nav>
-        </div>
-      )}
-    </header>
-  )
+      {/* Mobile Menu (hidden by default, toggle with JS) */}
+      <div id="mobile-menu" className="hidden md:hidden px-4 pb-4 space-y-2">
+        <a href="/" className="flex items-center gap-2 text-gray-700 hover:text-blue-600"><Home size={18}/> Home</a>
+        <a href="/shop" className="flex items-center gap-2 text-gray-700 hover:text-blue-600"><ShoppingCart size={18}/> Shop</a>
+        <a href="/services" className="flex items-center gap-2 text-gray-700 hover:text-blue-600"><Package size={18}/> Services</a>
+        <a href="/orders" className="flex items-center gap-2 text-gray-700 hover:text-blue-600"><Package size={18}/> Orders</a>
+        <a href="/profile" className="flex items-center gap-2 text-gray-700 hover:text-blue-600"><User size={18}/> Profile</a>
+        <a href="/contact" className="flex items-center gap-2 text-gray-700 hover:text-blue-600"><Phone size={18}/> Contact</a>
+        <a href="/settings" className="flex items-center gap-2 text-gray-700 hover:text-blue-600"><Settings size={18}/> Settings</a>
+      </div>
+    </nav>
+  );
 }
